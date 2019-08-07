@@ -8,14 +8,15 @@ export class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks: [
-				"Make the bed",
-				"Wash my hands",
-				"Walk the dog",
-				"Eat",
-				"Go shopping"
-			]
+			tasks: []
 		};
+	}
+
+	componentDidMount() {
+		fetch("https://assets.breatheco.de/apis/fake/todos/user/homeroluzardo")
+			.then(response => response.json())
+			.then(data => this.setState({ tasks: data }))
+			.catch(error => alert("Error retrieving the data"));
 	}
 
 	addItem(event) {
@@ -46,7 +47,7 @@ export class Home extends React.Component {
 					{this.state.tasks.map((item, index) => {
 						return (
 							<li className="list-group-item" key={index}>
-								{item}{" "}
+								{item.label}{" "}
 								<span onClick={() => this.removeItem(item)}>
 									&#10005;
 								</span>
